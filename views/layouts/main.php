@@ -7,73 +7,58 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use \yii\helpers\Url;
+
 use app\assets\AppAsset;
 
+$appUrl = Yii::$app->request->baseUrl . '/';
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="en">
 <head>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8">
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="icon" href="favicon.ico">
+    <!-- Bootstrap -->
+    <link href="<?= $appUrl ?>files/css/style.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
-
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
-    </div>
+<!-- BEGIN ba-intro  -->
+<div style="background-image: url(<?= $appUrl ?>files/images/about-bg.jpg)" class="ba-intro">
+    <?= $this->render('//common/menu') ?>
+    <?= $this->render('//common/who-we-are') ?>
 </div>
+<!-- END ba-intro -->
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
+<main>
+    <?= $content ?>
+    <footer class="ba-footer">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a>Home</a></li>
+            </ul>
+        </div>
+    </footer>
+</main>
 <?php $this->endBody() ?>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script defer src="<?= $appUrl ?>files/javascripts/bootstrap.min.js"></script>
+<script defer src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script defer src="<?= $appUrl ?>files/javascripts/slick.min.js"></script>
+<script defer src="<?= $appUrl ?>files/javascripts/main.js"></script>
 </body>
 </html>
 <?php $this->endPage() ?>
